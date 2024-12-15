@@ -28,8 +28,8 @@ export const useContactsStore = defineStore("contacts", () => {
 
   watch(
     contacts,
-    (newContacts) => {
-      localStorage.setItem("contacts", JSON.stringify(newContacts));
+    (newContact, oldContact) => {
+      localStorage.setItem("contacts", JSON.stringify(newContact));
     },
     { deep: true }
   );
