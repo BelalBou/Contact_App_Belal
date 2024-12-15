@@ -1,7 +1,17 @@
 <script setup>
+import { defineProps } from "vue";
+import { useContactsStore } from "@/stores/contacts";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 const props = defineProps({
   contact: Object,
 });
+
+const editContact = (id) => {
+  router.push({ name: "AddContact", params: { id: props.contact.id } });
+};
 </script>
 
 <template>
@@ -14,6 +24,7 @@ const props = defineProps({
     <div class="flex gap-2">
       <button
         class="bg-yellow-400 text-white px-4 py-2 rounded shadow hover:bg-yellow-500"
+        @click="editContact"
       >
         Edit
       </button>

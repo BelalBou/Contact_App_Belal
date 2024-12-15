@@ -1,65 +1,98 @@
-<!-- src/components/addContact.vue -->
 <script setup>
-import { ref } from "vue";
+import { reactive, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useContactsStore } from "@/stores/contacts";
-import { useRouter } from "vue-router";
 
-const contactsStore = useContactsStore();
+const newContact = reactive({
+  id: null,
+  name: "",
+  email: "",
+  phone: "",
+});
+
 const router = useRouter();
-const addContact = contactsStore.addContact;
+const route = useRoute();
+const contactsStore = useContactsStore();
 
-const name = ref("");
-const email = ref("");
-const phone = ref("");
+onMounted(() => {
+  if (route.params.id) {
+    const contact = contactsStore.contacts.find(
+      (contact) => contact.id === parseInt(route.params.id)
+    );
+    if (contact) {
+      newContact.id = contact.id;
+      newContact.name = contact.name;
+      newContact.email = contact.email;
+      newContact.phone = contact.phone;
+    }
+  }
+});
 
-const handleSubmit = () => {
-  addContact({
-    name: name.value,
-    email: email.value,
-    phone: phone.value,
-  });
+const saveContact = () => {
+  if (newContact.id) {
+    contactsStore.updateContact({ ...newContact });
+  } else {
+    newContact.id = Date.now();
+    contactsStore.addContact({ ...newContact });
+  }
 
-  router.push("/");
+  newContact.name = "";
+  newContact.email = "";
+  newContact.phone = "";
+
+  router.push({ name: "Dashboard" });
 };
 </script>
 
 <template>
-  <form id="contact-form" class="space-y-4" @submit.prevent="handleSubmit">
-    <div>
-      <label for="name" class="block text-sm font-medium">Name</label>
-      <input
-        type="text"
-        id="name"
-        v-model="name"
-        placeholder="John Doe"
-        class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
+  <main class="container mx-auto px-4 mt-6 flex-grow">
+    <div class="flex flex-col lg:flex-row gap-6">
+      <section class="w-full lg:w-1/3 bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">
+          {{ newContact.id ? "Edit" : "Add" }} Contact
+        </h2>
+        <form @submit.prevent="saveContact" class="space-y-4">
+          <div>
+            <label for="name" class="block font-bold">Name:</label>
+            <input
+              id="name"
+              v-model="newContact.name"
+              type="text"
+              class="w-full border rounded p-2"
+              placeholder="Enter name"
+              required
+            />
+          </div>
+          <div>
+            <label for="email" class="block font-bold">Email:</label>
+            <input
+              id="email"
+              v-model="newContact.email"
+              type="email"
+              class="w-full border rounded p-2"
+              placeholder="Enter email"
+              required
+            />
+          </div>
+          <div>
+            <label for="phone" class="block font-bold">Phone:</label>
+            <input
+              id="phone"
+              v-model="newContact.phone"
+              type="tel"
+              class="w-full border rounded p-2"
+              placeholder="Enter phone number"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700"
+          >
+            {{ newContact.id ? "Update Contact" : "Save Contact" }}
+          </button>
+        </form>
+      </section>
     </div>
-    <div>
-      <label for="email" class="block text-sm font-medium">Email</label>
-      <input
-        type="email"
-        id="email"
-        v-model="email"
-        placeholder="johndoe@example.com"
-        class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-    </div>
-    <div>
-      <label for="phone" class="block text-sm font-medium">Phone</label>
-      <input
-        type="tel"
-        id="phone"
-        v-model="phone"
-        placeholder="+123 456 789"
-        class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-    </div>
-    <button
-      type="submit"
-      class="w-full bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700"
-    >
-      Save Contact
-    </button>
-  </form>
+  </main>
 </template>

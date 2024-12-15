@@ -22,8 +22,16 @@ export const useContactsStore = defineStore("contacts", () => {
   );
 
   const addContact = (contact) => {
-    contact.id = Date.now();
-    contacts.push(contact);
+    contacts.unshift(contact);
+  };
+
+  const updateContact = (updatedContact) => {
+    const index = contacts.findIndex(
+      (contact) => contact.id === updatedContact.id
+    );
+    if (index !== -1) {
+      contacts[index] = updatedContact;
+    }
   };
 
   watch(
@@ -37,5 +45,6 @@ export const useContactsStore = defineStore("contacts", () => {
   return {
     contacts,
     addContact,
+    updateContact,
   };
 });
