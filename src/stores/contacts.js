@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { reactive, watch, computed, ref } from "vue";
+import { toast } from "vue3-toastify";
 
 export const useContactsStore = defineStore("contacts", () => {
   const contacts = reactive(
@@ -30,18 +31,17 @@ export const useContactsStore = defineStore("contacts", () => {
   const filteredContacts = computed(() => {
     if (!searchQuery.value) return contacts;
 
-    return contacts.filter((contact) => {
-      const searchLower = searchQuery.value.toLowerCase();
-      return (
+    const searchLower = searchQuery.value.toLowerCase();
+    return contacts.filter(
+      (contact) =>
         contact.name.toLowerCase().includes(searchLower) ||
         contact.email.toLowerCase().includes(searchLower)
-      );
-    });
+    );
   });
 
   const addContact = (contact) => {
     contacts.unshift(contact);
-    toast.success("Contact ajouté avec succès !");
+    return true;
   };
 
   const updateContact = (updatedContact) => {
@@ -50,9 +50,9 @@ export const useContactsStore = defineStore("contacts", () => {
     );
     if (index !== -1) {
       contacts[index] = updatedContact;
-      toast.success("Contact mis à jour avec succès !");
+      return true;
     } else {
-      toast.error("Erreur de mise à jour du contact.");
+      return false;
     }
   };
 

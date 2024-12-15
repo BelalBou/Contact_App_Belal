@@ -10,10 +10,6 @@ const contactToEdit = ref(null);
 const startEditing = (contact) => {
   contactToEdit.value = { ...contact };
 };
-
-const stopEditing = () => {
-  contactToEdit.value = null;
-};
 </script>
 
 <template>
@@ -40,7 +36,7 @@ const stopEditing = () => {
         />
       </section>
       <section v-if="contactToEdit" class="w-full lg:w-1/3">
-        <AddContact :contact="contactToEdit" @save="stopEditing" />
+        <AddContact :contact="contactToEdit" />
       </section>
     </div>
   </main>
