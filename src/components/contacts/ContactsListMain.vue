@@ -1,14 +1,11 @@
 <script setup>
-import ContactsList from "./ContactsList.vue";
 import { useContactsStore } from "@/stores/contacts";
+import ContactsList from "./ContactsList.vue";
 
 const contactsStore = useContactsStore();
 
 const contacts = contactsStore.contacts;
-
-const props = defineProps({
-  contacts: Array,
-});
+const contactCount = contactsStore.contactCount;
 </script>
 
 <template>
@@ -19,7 +16,7 @@ const props = defineProps({
       <section class="w-full lg:w-2/3 bg-white rounded-lg shadow p-6">
         <h2 class="text-xl mb-4 flex justify-between">
           <span class="font-semibold">Contacts</span>
-          <span class="text-sm">{{ contacts.length }} item(s)</span>
+          <span class="text-sm">{{ contactCount }} item(s)</span>
         </h2>
         <div class="flex items-center mb-4">
           <input

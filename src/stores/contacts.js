@@ -41,6 +41,8 @@ export const useContactsStore = defineStore("contacts", () => {
     }
   };
 
+  const contactCount = computed(() => contacts.length);
+
   watch(
     contacts,
     (newContact, oldContact) => {
@@ -51,6 +53,7 @@ export const useContactsStore = defineStore("contacts", () => {
 
   return {
     contacts,
+    contactCount,
     addContact,
     updateContact,
     deleteOneById,
