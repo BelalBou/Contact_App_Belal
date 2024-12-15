@@ -1,5 +1,5 @@
 <script setup>
-import ContactsListItem from "@/components/ContactsListItem.vue";
+import ContactsListItem from "@/components/contacts/ContactsListItem.vue";
 const props = defineProps({
   contacts: Object,
 });

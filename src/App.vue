@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import AppFooter from "@/components/AppFooter.vue";
-import AppHeader from "@/components/AppHeader.vue";
+import AppFooter from "@/components/partials/AppFooter.vue";
+import AppHeader from "@/components/partials/AppHeader.vue";
 </script>
 
 <template>
@@ -11,5 +11,3 @@ import AppHeader from "@/components/AppHeader.vue";
     <AppFooter />
   </body>
 </template>
-
-<style scoped></style>
