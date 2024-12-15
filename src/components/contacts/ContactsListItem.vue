@@ -1,17 +1,18 @@
 <script setup>
-import { defineProps } from "vue";
 import { useContactsStore } from "@/stores/contacts";
 import { useRouter } from "vue-router";
 
-const router = useRouter();
-const contactsStore = useContactsStore();
-
 const props = defineProps({
-  contact: Object,
+  contact: {
+    type: Object,
+  },
 });
 
+const contactsStore = useContactsStore();
+const router = useRouter();
+
 const editContact = (id) => {
-  router.push({ name: "AddContact", params: { id: props.contact.id } });
+  router.push({ name: "AddContact", params: { id } });
 };
 </script>
 
@@ -24,8 +25,8 @@ const editContact = (id) => {
     </div>
     <div class="flex gap-2">
       <button
+        @click="editContact(contact.id)"
         class="bg-yellow-400 text-white px-4 py-2 rounded shadow hover:bg-yellow-500"
-        @click="editContact"
       >
         Edit
       </button>
