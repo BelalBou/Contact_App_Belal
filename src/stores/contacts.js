@@ -50,9 +50,6 @@ export const useContactsStore = defineStore("contacts", () => {
     );
     if (index !== -1) {
       contacts[index] = updatedContact;
-      return true;
-    } else {
-      return false;
     }
   };
 

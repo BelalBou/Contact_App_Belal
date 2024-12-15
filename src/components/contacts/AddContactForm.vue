@@ -91,6 +91,8 @@ const saveContact = async () => {
               type="tel"
               class="w-full border rounded p-2"
               placeholder="Enter phone number"
+              pattern="^\+?[0-9]+$"
+              title="Le numéro de téléphone peut commencer par + suivi de chiffres uniquement."
               required
             />
           </div>
