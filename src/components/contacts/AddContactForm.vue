@@ -4,16 +4,16 @@ import { useRouter, useRoute } from "vue-router";
 import { useContactsStore } from "@/stores/contacts";
 import { toast } from "vue3-toastify";
 
-const newContact = reactive({
+const router = useRouter();
+const route = useRoute();
+const contactsStore = useContactsStore();
+
+const currentContact = reactive({
   id: null,
   name: "",
   email: "",
   phone: "",
 });
-
-const router = useRouter();
-const route = useRoute();
-const contactsStore = useContactsStore();
 
 onMounted(() => {
   if (route.params.id) {
@@ -21,10 +21,10 @@ onMounted(() => {
       (contact) => contact.id === parseInt(route.params.id)
     );
     if (contact) {
-      newContact.id = contact.id;
-      newContact.name = contact.name;
-      newContact.email = contact.email;
-      newContact.phone = contact.phone;
+      currentContact.id = contact.id;
+      currentContact.name = contact.name;
+      currentContact.email = contact.email;
+      currentContact.phone = contact.phone;
     }
   }
 });
@@ -32,16 +32,12 @@ onMounted(() => {
 const saveContact = async () => {
   let success = false;
 
-  if (newContact.id) {
-    success = contactsStore.updateContact({ ...newContact });
+  if (currentContact.id) {
+    success = contactsStore.updateContact({ ...currentContact });
   } else {
-    newContact.id = Date.now();
-    success = contactsStore.addContact({ ...newContact });
+    currentContact.id = Date.now();
+    success = contactsStore.addContact({ ...currentContact });
   }
-
-  newContact.name = "";
-  newContact.email = "";
-  newContact.phone = "";
 
   await router.push({ name: "Dashboard" });
 
@@ -58,14 +54,14 @@ const saveContact = async () => {
     <div class="flex flex-col lg:flex-row gap-6">
       <section class="w-full lg:w-1/3 bg-white rounded-lg shadow p-6">
         <h2 class="text-xl font-semibold mb-4">
-          {{ newContact.id ? "Edit" : "Add" }} Contact
+          {{ currentContact.id ? "Edit" : "Add" }} Contact
         </h2>
         <form @submit.prevent="saveContact" class="space-y-4">
           <div>
             <label for="name" class="block font-bold">Name:</label>
             <input
               id="name"
-              v-model="newContact.name"
+              v-model="currentContact.name"
               type="text"
               class="w-full border rounded p-2"
               placeholder="Enter name"
@@ -76,7 +72,7 @@ const saveContact = async () => {
             <label for="email" class="block font-bold">Email:</label>
             <input
               id="email"
-              v-model="newContact.email"
+              v-model="currentContact.email"
               type="email"
               class="w-full border rounded p-2"
               placeholder="Enter email"
@@ -87,7 +83,7 @@ const saveContact = async () => {
             <label for="phone" class="block font-bold">Phone:</label>
             <input
               id="phone"
-              v-model="newContact.phone"
+              v-model="currentContact.phone"
               type="tel"
               class="w-full border rounded p-2"
               placeholder="Enter phone number"
@@ -100,7 +96,7 @@ const saveContact = async () => {
             type="submit"
             class="w-full bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700"
           >
-            {{ newContact.id ? "Update Contact" : "Save Contact" }}
+            {{ currentContact.id ? "Update Contact" : "Save Contact" }}
           </button>
         </form>
       </section>

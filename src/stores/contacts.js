@@ -17,16 +17,10 @@ export const useContactsStore = defineStore("contacts", () => {
         email: "janesmith@example.com",
         phone: "+987 654 321",
       },
-      {
-        id: 3,
-        name: "Alice Johnson",
-        email: "alicej@example.com",
-        phone: "+111 222 333",
-      },
     ]
   );
 
-  const searchQuery = reactive({ value: "" });
+  const searchQuery = ref("");
 
   const filteredContacts = computed(() => {
     if (!searchQuery.value) return contacts;
@@ -39,8 +33,10 @@ export const useContactsStore = defineStore("contacts", () => {
     );
   });
 
+  const filteredContactsCount = computed(() => filteredContacts.value.length);
+
   const addContact = (contact) => {
-    contacts.unshift(contact);
+    contacts.push(contact);
     return true;
   };
 
@@ -50,6 +46,9 @@ export const useContactsStore = defineStore("contacts", () => {
     );
     if (index !== -1) {
       contacts[index] = updatedContact;
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -75,6 +74,7 @@ export const useContactsStore = defineStore("contacts", () => {
     contacts,
     searchQuery,
     filteredContacts,
+    filteredContactsCount,
     addContact,
     updateContact,
     deleteOneById,
