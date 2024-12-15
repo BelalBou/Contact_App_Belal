@@ -4,6 +4,7 @@ import { useContactsStore } from "@/stores/contacts";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const contactsStore = useContactsStore();
 
 const props = defineProps({
   contact: Object,
@@ -29,6 +30,7 @@ const editContact = (id) => {
         Edit
       </button>
       <button
+        @click.prevent="contactsStore.deleteOneById(contact.id)"
         class="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600"
       >
         Delete

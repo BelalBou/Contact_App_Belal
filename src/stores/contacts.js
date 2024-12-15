@@ -34,6 +34,13 @@ export const useContactsStore = defineStore("contacts", () => {
     }
   };
 
+  const deleteOneById = (id) => {
+    const index = contacts.findIndex((item) => item.id == id);
+    if (index !== -1) {
+      contacts.splice(index, 1);
+    }
+  };
+
   watch(
     contacts,
     (newContact, oldContact) => {
@@ -46,5 +53,6 @@ export const useContactsStore = defineStore("contacts", () => {
     contacts,
     addContact,
     updateContact,
+    deleteOneById,
   };
 });
