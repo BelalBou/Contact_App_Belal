@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen flex flex-col bg-gray-100 text-gray-800 font-sans">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white py-4 shadow-md">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Contact Manager</h1>
+        <button
+          onclick="window.location.href='/add-contact'"
+          class="bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600"
+        >
+          Add Contact
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 mt-6 flex-grow">
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Contact List Section -->
+        <section class="w-full lg:w-2/3 bg-white rounded-lg shadow p-6">
+          <h2 class="text-xl mb-4 flex justify-between">
+            <span class="font-semibold">Contacts</span>
+            <span class="text-sm">x item(s)</span>
+          </h2>
+          <div class="flex items-center mb-4">
+            <input
+              type="text"
+              placeholder="Search contacts..."
+              class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <ul id="contacts-list" class="divide-y divide-gray-200">
+            <!-- Example Contact Item -->
+            <li class="md:flex items-center justify-between py-4">
+              <div class="pb-4 md:pb-0">
+                <h3 class="text-lg font-semibold">John Doe</h3>
+                <p class="text-gray-500">johndoe@example.com</p>
+                <p class="text-gray-500">+123 456 789</p>
+              </div>
+              <div class="flex gap-2">
+                <button
+                  class="bg-yellow-400 text-white px-4 py-2 rounded shadow hover:bg-yellow-500"
+                >
+                  Edit
+                </button>
+                <button
+                  class="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600"
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+            <!-- Add more contacts here -->
+            <li class="md:flex items-center justify-between py-4">
+              <div class="pb-4 md:pb-0">
+                <h3 class="text-lg font-semibold">John Doe</h3>
+                <p class="text-gray-500">johndoe@example.com</p>
+                <p class="text-gray-500">+123 456 789</p>
+              </div>
+              <div class="flex gap-2">
+                <button
+                  class="bg-yellow-400 text-white px-4 py-2 rounded shadow hover:bg-yellow-500"
+                >
+                  Edit
+                </button>
+                <button
+                  class="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600"
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4 mt-6">
+      <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2024 Contact Manager. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
